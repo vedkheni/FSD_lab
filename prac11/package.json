@@ -1,0 +1,23 @@
+{
+    "name": "express-app-template",
+    "version": "1.0.0",
+    "description": "Basic Express.js app template for team projects",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon app.js"
+    },
+    "dependencies": {
+        "express": "^4.18.2"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    },
+    "keywords": [
+        "express",
+        "nodejs",
+        "template"
+    ],
+    "author": "Team",
+    "license": "MIT"
+}
