@@ -1,0 +1,316 @@
+/* Kids Calculator Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  background: linear-gradient(
+    45deg,
+    #ff6b6b,
+    #feca57,
+    #48dbfb,
+    #ff9ff3,
+    #54a0ff
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease infinite;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30px;
+  padding: 3rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border: 5px solid #fff;
+}
+
+h1 {
+  color: #333;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.calculator-form {
+  margin-bottom: 2rem;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: 3px solid #ddd;
+  border-radius: 15px;
+  background: #fff;
+  transition: all 0.3s ease;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
+  transform: scale(1.02);
+}
+
+.input-group select {
+  cursor: pointer;
+}
+
+.calculate-btn {
+  background: linear-gradient(45deg, #ff6b6b, #feca57);
+  color: white;
+  padding: 1.2rem 2.5rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+}
+
+.calculate-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 25px rgba(255, 107, 107, 0.4);
+}
+
+.calculate-btn:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.result {
+  background: linear-gradient(45deg, #2ed573, #7bed9f);
+  color: white;
+  padding: 2rem;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 2rem;
+  box-shadow: 0 10px 25px rgba(46, 213, 115, 0.3);
+  animation: resultPop 0.5s ease-out;
+}
+
+@keyframes resultPop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.answer {
+  font-size: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  margin-left: 0.5rem;
+  animation: numberGlow 1s ease-in-out infinite alternate;
+}
+
+@keyframes numberGlow {
+  from {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  to {
+    text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.8);
+  }
+}
+
+.error {
+  background: linear-gradient(45deg, #ff6b6b, #ff7675);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 2rem;
+  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem;
+    margin: 1rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .input-group input,
+  .input-group select {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+
+  .calculate-btn {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+  }
+
+  .result {
+    font-size: 1.3rem;
+    padding: 1.5rem;
+  }
+
+  .answer {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .result {
+    font-size: 1.1rem;
+  }
+
+  .answer {
+    font-size: 1.5rem;
+  }
+}
+
+/* Fun floating elements */
+.container::before {
+  content: "🌟";
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  font-size: 2rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.container::after {
+  content: "🎈";
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  font-size: 2rem;
+  animation: float 4s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Hover effects for inputs */
+.input-group {
+  position: relative;
+}
+
+.input-group input:hover,
+.input-group select:hover {
+  border-color: #feca57;
+  transform: scale(1.01);
+}
+
+/* Success and error icons */
+.result::before {
+  content: "🎉";
+  margin-right: 0.5rem;
+  font-size: 1.8rem;
+}
+
+.error::before {
+  content: "❌";
+  margin-right: 0.5rem;
+  font-size: 1.5rem;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Calculator 🧮</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧮 Kids Calculator</h1>
+        <p class="subtitle">Let's do some math together!</p>
+
+        <form action="/calculate" method="POST" class="calculator-form">
+            <div class="input-group">
+                <label for="number1">First Number:</label>
+                <input type="text" id="number1" name="number1" placeholder="Enter first number" required>
+            </div>
+
+            <div class="input-group">
+                <label for="operation">Choose Operation:</label>
+                <select id="operation" name="operation" required>
+                    <option value="">Select operation</option>
+                    <option value="add">➕ Add</option>
+                    <option value="subtract">➖ Subtract</option>
+                    <option value="multiply">✖️ Multiply</option>
+                    <option value="divide">➗ Divide</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="number2">Second Number:</label>
+                <input type="text" id="number2" name="number2" placeholder="Enter second number" required>
+            </div>
+
+            <button type="submit" class="calculate-btn">Calculate! 🚀</button>
+        </form>
+
+        <% if (error) { %>
+            <div class="error">
+                ❌ <%= error %>
+            </div>
+            <% } %>
+
+                <% if (result !==null && !error) { %>
+                    <div class="result">
+                        🎉 The answer is: <span class="answer">
+                            <%= result %>
+                        </span>
+                    </div>
+                    <% } %>
+    </div>
+</body>
+
+</html>
