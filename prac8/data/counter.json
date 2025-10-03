@@ -1,0 +1,24 @@
+{
+  "counters": {
+    "main": {
+      "value": 29,
+      "exercise": "General Exercise",
+      "lastUpdated": "2025-10-03T14:55:31.567Z"
+    },
+    "Biceps": {
+      "value": 15,
+      "exercise": "Biceps",
+      "lastUpdated": "2025-09-19T05:11:34.587Z"
+    },
+    "Wednesday": {
+      "value": 10,
+      "exercise": "Chest Workout",
+      "lastUpdated": "2025-10-03T14:56:45.903Z"
+    },
+    "Back": {
+      "value": 0,
+      "exercise": "Back",
+      "lastUpdated": "2025-10-03T14:56:19.400Z"
+    }
+  }
+}
