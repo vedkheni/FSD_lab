@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Viewer</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Error Log Viewer</h1>
+
+        <% if (error) { %>
+            <div class="error">
+                <strong>Error:</strong>
+                <%= error %>
+            </div>
+            <% } %>
+
+                <% if (logFiles.length> 0) { %>
+                    <h2>Available Log Files</h2>
+                    <ul class="file-list">
+                        <% logFiles.forEach(file=> { %>
+                            <li>
+                                <a href="/logs/<%= file %>" class="file-link">
+                                    <%= file %>
+                                </a>
+                            </li>
+                            <% }) %>
+                    </ul>
+                    <% } else { %>
+                        <p class="no-files">No log files found in the logs directory.</p>
+                        <% } %>
+    </div>
+</body>
+
+</html>

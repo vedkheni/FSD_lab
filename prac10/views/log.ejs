@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log: <%= filename %>
+    </title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="/" class="back-link">← Back to Log List</a>
+            <h1>Log File: <%= filename %>
+            </h1>
+        </div>
+
+        <% if (error) { %>
+            <div class="error">
+                <strong>Error:</strong>
+                <%= error %>
+            </div>
+            <% } else { %>
+                <div class="log-content">
+                    <pre><%= content %></pre>
+                </div>
+                <% } %>
+    </div>
+</body>
+
+</html>
