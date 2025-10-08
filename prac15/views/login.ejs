@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Portal - Login</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>📚 Library Portal</h1>
+        <h2>Welcome! Please sign in to continue</h2>
+
+        <% if (typeof error !=='undefined' ) { %>
+        <div class="error">❌ <%= error %></div>
+        <% } %>
+
+        <form action="/login" method="POST">
+          <div class="form-group">
+            <label for="name">👤 Your Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              placeholder="Enter your full name"
+              maxlength="50"
+            />
+          </div>
+          <button type="submit" class="btn">🔐 Sign In to Library</button>
+        </form>
+
+        <div
+          style="
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #666;
+          "
+        >
+          <p>📖 Access your reading history and manage your library account</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

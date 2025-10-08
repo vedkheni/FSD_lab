@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Portal - Resume Upload</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🏢 Job Portal</h1>
+        <p>Upload your resume to apply for exciting job opportunities</p>
+      </header>
+
+      <main>
+        <div class="upload-section">
+          <div class="upload-card">
+            <div class="upload-header">
+              <h2>📄 Upload Your Resume</h2>
+              <p>Please upload your resume in PDF format (max 2MB)</p>
+            </div>
+
+            <form id="resumeForm" enctype="multipart/form-data">
+              <div class="file-input-container">
+                <input
+                  type="file"
+                  id="resumeFile"
+                  name="resume"
+                  accept=".pdf"
+                  required
+                />
+                <label for="resumeFile" class="file-input-label">
+                  <span class="file-icon">📁</span>
+                  <span class="file-text">Choose PDF File</span>
+                  <span class="file-requirements">PDF only, max 2MB</span>
+                </label>
+              </div>
+
+              <div class="file-info" id="fileInfo" style="display: none">
+                <div class="file-details">
+                  <span class="file-name" id="fileName"></span>
+                  <span class="file-size" id="fileSize"></span>
+                </div>
+              </div>
+
+              <button type="submit" id="uploadBtn" class="upload-btn" disabled>
+                <span class="btn-icon">🚀</span>
+                Upload Resume
+              </button>
+            </form>
+
+            <div
+              class="progress-container"
+              id="progressContainer"
+              style="display: none"
+            >
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <div class="progress-text" id="progressText">Uploading...</div>
+            </div>
+
+            <div class="message" id="message"></div>
+          </div>
+        </div>
+
+        <div class="uploaded-resumes-section">
+          <div class="resumes-card">
+            <h3>📋 Uploaded Resumes</h3>
+            <div class="resumes-list" id="resumesList">
+              <div class="loading" id="loadingResumes">Loading resumes...</div>
+            </div>
+            <button class="refresh-btn" id="refreshBtn">🔄 Refresh List</button>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <p>
+          &copy; 2025 Job Portal. Secure resume uploads for better
+          opportunities.
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const resumeForm = document.getElementById("resumeForm");
+      const resumeFile = document.getElementById("resumeFile");
+      const fileInfo = document.getElementById("fileInfo");
+      const fileName = document.getElementById("fileName");
+      const fileSize = document.getElementById("fileSize");
+      const uploadBtn = document.getElementById("uploadBtn");
+      const progressContainer = document.getElementById("progressContainer");
+      const progressFill = document.getElementById("progressFill");
+      const progressText = document.getElementById("progressText");
+      const message = document.getElementById("message");
+      const resumesList = document.getElementById("resumesList");
+      const refreshBtn = document.getElementById("refreshBtn");
+
+      // File input change handler
+      resumeFile.addEventListener("change", function () {
+        const file = this.files[0];
+
+        if (file) {
+          // Validate file type
+          if (file.type !== "application/pdf") {
+            showMessage("Please select a PDF file only!", "error");
+            this.value = "";
+            hideFileInfo();
+            return;
+          }
+
+          // Validate file size (2MB = 2 * 1024 * 1024 bytes)
+          if (file.size > 2 * 1024 * 1024) {
+            showMessage("File size must be less than 2MB!", "error");
+            this.value = "";
+            hideFileInfo();
+            return;
+          }
+
+          // Show file info
+          showFileInfo(file);
+          uploadBtn.disabled = false;
+          clearMessage();
+        } else {
+          hideFileInfo();
+          uploadBtn.disabled = true;
+        }
+      });
+
+      // Form submit handler
+      resumeForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const file = resumeFile.files[0];
+        if (!file) {
+          showMessage("Please select a file first!", "error");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("resume", file);
+
+        try {
+          showProgress();
+          uploadBtn.disabled = true;
+
+          const response = await fetch("/upload-resume", {
+            method: "POST",
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            showMessage(result.message, "success");
+            resumeForm.reset();
+            hideFileInfo();
+            loadResumes(); // Refresh the resumes list
+          } else {
+            showMessage(result.message, "error");
+          }
+        } catch (error) {
+          showMessage("Upload failed. Please try again.", "error");
+          console.error("Upload error:", error);
+        } finally {
+          hideProgress();
+          uploadBtn.disabled = false;
+        }
+      });
+
+      // Utility functions
+      function showFileInfo(file) {
+        fileName.textContent = file.name;
+        fileSize.textContent = formatFileSize(file.size);
+        fileInfo.style.display = "block";
+      }
+
+      function hideFileInfo() {
+        fileInfo.style.display = "none";
+        uploadBtn.disabled = true;
+      }
+
+      function showProgress() {
+        progressContainer.style.display = "block";
+        progressFill.style.width = "100%";
+      }
+
+      function hideProgress() {
+        progressContainer.style.display = "none";
+        progressFill.style.width = "0%";
+      }
+
+      function showMessage(text, type) {
+        message.textContent = text;
+        message.className = `message ${type}`;
+        message.style.display = "block";
+      }
+
+      function clearMessage() {
+        message.style.display = "none";
+      }
+
+      function formatFileSize(bytes) {
+        if (bytes === 0) return "0 Bytes";
+        const k = 1024;
+        const sizes = ["Bytes", "KB", "MB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+      }
+
+      // Load uploaded resumes
+      async function loadResumes() {
+        try {
+          const response = await fetch("/resumes");
+          const result = await response.json();
+
+          if (result.success) {
+            displayResumes(result.resumes);
+          } else {
+            resumesList.innerHTML =
+              '<div class="error">Failed to load resumes</div>';
+          }
+        } catch (error) {
+          resumesList.innerHTML =
+            '<div class="error">Error loading resumes</div>';
+          console.error("Load resumes error:", error);
+        }
+      }
+
+      function displayResumes(resumes) {
+        if (resumes.length === 0) {
+          resumesList.innerHTML =
+            '<div class="no-resumes">No resumes uploaded yet</div>';
+          return;
+        }
+
+        const resumeItems = resumes
+          .map(
+            (resume) => `
+                <div class="resume-item">
+                    <div class="resume-icon">📄</div>
+                    <div class="resume-details">
+                        <div class="resume-name">${resume.filename}</div>
+                        <div class="resume-date">Uploaded: ${new Date(
+                          resume.uploadDate
+                        ).toLocaleString()}</div>
+                    </div>
+                </div>
+            `
+          )
+          .join("");
+
+        resumesList.innerHTML = resumeItems;
+      }
+
+      // Refresh button handler
+      refreshBtn.addEventListener("click", loadResumes);
+
+      // Load resumes on page load
+      document.addEventListener("DOMContentLoaded", loadResumes);
+    </script>
+  </body>
+</html>

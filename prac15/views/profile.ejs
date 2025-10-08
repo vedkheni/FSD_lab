@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Portal - Profile</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>📚 Library Portal</h1>
+        <h2>Welcome back, <%= user.name %>!</h2>
+
+        <div class="session-info">
+          <h3>📊 Session Information</h3>
+          <div class="info-item">
+            <strong>👤 Name:</strong>
+            <span><%= user.name %></span>
+          </div>
+          <div class="info-item">
+            <strong>🕐 Login Time:</strong>
+            <span><%= user.loginTime %></span>
+          </div>
+          <div class="info-item">
+            <strong>⏱️ Session Duration:</strong>
+            <span><%= user.sessionDuration %></span>
+          </div>
+          <div class="info-item">
+            <strong>🔑 Session ID:</strong>
+            <span><%= user.sessionId.substring(0, 8) %>...</span>
+          </div>
+          <div class="info-item">
+            <strong>🟢 Status:</strong>
+            <span><span class="online-indicator"></span>Active</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <form action="/logout" method="POST" style="display: inline">
+            <button
+              type="submit"
+              class="btn btn-logout"
+              onclick="return confirm('Are you sure you want to logout?')"
+            >
+              🚪 Logout
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
