@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students - Tuition Admin Panel</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <h1><a href="/">Tuition Admin Panel</a></h1>
+        <a href="/add" class="btn btn-primary">Add Student</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <!-- Statistics Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number"><%= students.length %></div>
+          <div class="stat-label">Total Students</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">
+            <%= students.filter(s => s.feesPaid).length %>
+          </div>
+          <div class="stat-label">Fees Paid</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">
+            <%= students.filter(s => !s.feesPaid).length %>
+          </div>
+          <div class="stat-label">Fees Pending</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">
+            <%= new Set(students.map(s => s.subject)).size %>
+          </div>
+          <div class="stat-label">Subjects</div>
+        </div>
+      </div>
+
+      <!-- Search and Filter -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          class="form-control search-input"
+          placeholder="Search students..."
+        />
+        <select id="subjectFilter" class="form-control form-select">
+          <option value="">All Subjects</option>
+          <% const subjects = [...new Set(students.map(s => s.subject))]; %> <%
+          subjects.forEach(subject => { %>
+          <option value="<%= subject %>"><%= subject %></option>
+          <% }) %>
+        </select>
+        <select id="feesFilter" class="form-control form-select">
+          <option value="">All Fees Status</option>
+          <option value="paid">Paid</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Students List</h2>
+        </div>
+        <div class="card-body">
+          <% if (students.length === 0) { %>
+          <div class="empty-state">
+            <h3>No students found</h3>
+            <p>Get started by adding your first student to the system.</p>
+            <a href="/add" class="btn btn-primary">Add First Student</a>
+          </div>
+          <% } else { %>
+          <div class="table-container">
+            <table class="table" id="studentsTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Grade</th>
+                  <th>Subject</th>
+                  <th>Fees Status</th>
+                  <th>Joining Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% students.forEach(student => { %>
+                <tr
+                  data-subject="<%= student.subject %>"
+                  data-fees="<%= student.feesPaid ? 'paid' : 'pending' %>"
+                >
+                  <td><%= student.name %></td>
+                  <td><%= student.email %></td>
+                  <td><%= student.phone %></td>
+                  <td><%= student.grade %></td>
+                  <td><%= student.subject %></td>
+                  <td>
+                    <span
+                      class="badge <%= student.feesPaid ? 'badge-success' : 'badge-danger' %>"
+                    >
+                      <%= student.feesPaid ? 'Paid' : 'Pending' %>
+                    </span>
+                  </td>
+                  <td>
+                    <%= new Date(student.joiningDate).toLocaleDateString() %>
+                  </td>
+                  <td>
+                    <div class="action-buttons">
+                      <a
+                        href="/edit/<%= student._id %>"
+                        class="btn btn-secondary btn-sm"
+                        >Edit</a
+                      >
+                      <button
+                        class="btn btn-danger btn-sm"
+                        onclick="confirmDelete('<%= student._id %>', '<%= student.name %>')"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+      <div class="modal-content">
+        <h3>Confirm Delete</h3>
+        <p id="deleteMessage">Are you sure you want to delete this student?</p>
+        <div class="modal-buttons">
+          <button class="btn btn-secondary" onclick="closeDeleteModal()">
+            Cancel
+          </button>
+          <form id="deleteForm" method="POST" style="display: inline">
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="/script.js"></script>
+  </body>
+</html>

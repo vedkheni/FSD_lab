@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error - Tuition Admin Panel</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <h1><a href="/">Tuition Admin Panel</a></h1>
+        <a href="/" class="btn btn-secondary">Back to Home</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <div class="card">
+        <div class="card-body">
+          <div class="empty-state">
+            <h3>⚠️ Something went wrong</h3>
+            <div class="alert alert-danger"><%= error %></div>
+            <div style="margin-top: 2rem">
+              <a href="/" class="btn btn-primary">Go Back Home</a>
+              <button onclick="history.back()" class="btn btn-secondary">
+                Go Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
